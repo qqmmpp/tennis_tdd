@@ -16,16 +16,8 @@ class TennisGame:
         return '%s-%s' % (self.score_mapping[self.P1_score], self.score_mapping[self.P2_score])
 
     def score(self):
-        if self.is_deuce():
-            return 'Deuce'
-
-        if self.is_the_same_score():
-            return self.the_same_score()
-
-        if self.is_someone_score_more_than_forty():
-            return self.game_point_score()
-
-        return self.lookup_score()
+        'Deuce' if self.is_deuce() else self.the_same_score() if self.is_the_same_score() else \
+            self.game_point_score() if self.is_someone_score_more_than_forty() else self.lookup_score()
 
     def game_point_score(self):
         if self.is_win():
