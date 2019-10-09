@@ -12,24 +12,23 @@ class TennisGame:
             3: 'Forty'
         }
 
+    def lookup_score(self):
+        return '%s-%s' % (self.score_mapping[self.P1_score], self.score_mapping[self.P2_score])
+
     def score(self):
+        if self.is_deuce():
+            return 'Deuce'
+
+        if self.is_the_same_score():
+            return self.the_same_score()
+
         if self.is_win():
             return self.who_is_better('Win')
 
-        elif self.is_ad():
+        if self.is_ad():
             return self.who_is_better('AD')
 
-        elif self.is_deuce():
-            return 'Deuce'
-
-        elif self.is_the_same_score():
-            return self.the_same_score()
-
-        else:
-            return self.lookup_score()
-
-    def lookup_score(self):
-        return '%s-%s' % (self.score_mapping[self.P1_score], self.score_mapping[self.P2_score])
+        return self.lookup_score()
 
     def the_same_score(self):
         return '%s-All' % self.score_mapping[self.P1_score]
@@ -60,7 +59,7 @@ class TennisGame:
             return False
 
     def is_ad(self):
-        if self.is_score_more_than_forty() and self.is_score_gap_more_than(1):
+        if self.is_someone_score_more_than_forty() and self.is_score_gap_more_than(1):
             return True
         else:
             return False
@@ -79,12 +78,6 @@ class TennisGame:
 
     def is_someone_score_more_than_forty(self):
         if self.P1_score > 3 or self.P2_score > 3:
-            return True
-        else:
-            return False
-
-    def is_score_more_than_forty(self):
-        if self.P1_score >= 3 and self.P2_score >= 3:
             return True
         else:
             return False
