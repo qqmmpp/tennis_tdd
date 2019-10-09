@@ -13,23 +13,20 @@ class TennisGame:
         }
 
     def score(self):
-        if self.is_game_start():
-            return 'Love-All'
+        if self.is_win():
+            return self.who_is_better('Win')
+
+        elif self.is_ad():
+            return self.who_is_better('AD')
+
+        elif self.is_deuce():
+            return 'Deuce'
+
+        elif self.is_the_same_score():
+            return '%s-All' % self.score_mapping[self.P1_score]
+
         else:
-            if self.is_win():
-                return self.who_is_better('Win')
-
-            elif self.is_ad():
-                return self.who_is_better('AD')
-
-            elif self.is_deuce():
-                return 'Deuce'
-
-            elif self.is_the_same_score():
-                return '%s-All' % self.score_mapping[self.P1_score]
-
-            else:
-                return '%s-%s' % (self.score_mapping[self.P1_score], self.score_mapping[self.P2_score])
+            return '%s-%s' % (self.score_mapping[self.P1_score], self.score_mapping[self.P2_score])
 
     def add_score(self, player, times):
         for i in range(0, times):
@@ -37,12 +34,6 @@ class TennisGame:
                 self.P1_score = self.P1_score + 1
             else:
                 self.P2_score = self.P2_score + 1
-
-    def is_game_start(self):
-        if self.is_the_same_score() and self.P1_score == 0:
-            return True
-        else:
-            return False
 
     def is_deuce(self):
         if self.is_the_same_score() and self.P1_score >= 3:
