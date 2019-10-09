@@ -23,10 +23,16 @@ class TennisGame:
             return 'Deuce'
 
         elif self.is_the_same_score():
-            return '%s-All' % self.score_mapping[self.P1_score]
+            return self.the_same_score()
 
         else:
-            return '%s-%s' % (self.score_mapping[self.P1_score], self.score_mapping[self.P2_score])
+            return self.lookup_score()
+
+    def lookup_score(self):
+        return '%s-%s' % (self.score_mapping[self.P1_score], self.score_mapping[self.P2_score])
+
+    def the_same_score(self):
+        return '%s-All' % self.score_mapping[self.P1_score]
 
     def add_score(self, player, times):
         for i in range(0, times):
