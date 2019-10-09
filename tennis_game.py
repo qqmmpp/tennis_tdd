@@ -23,12 +23,15 @@ class TennisGame:
             return self.the_same_score()
 
         if self.is_someone_score_more_than_forty():
-            if self.is_win():
-                return self.who_is_better('Win')
-            else:
-                return self.who_is_better('AD')
+            return self.game_point_score()
 
         return self.lookup_score()
+
+    def game_point_score(self):
+        if self.is_win():
+            return self.who_is_better('Win')
+        else:
+            return self.who_is_better('AD')
 
     def the_same_score(self):
         return '%s-All' % self.score_mapping[self.P1_score]
