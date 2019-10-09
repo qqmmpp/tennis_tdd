@@ -12,24 +12,21 @@ class TennisGame:
             3: 'Forty'
         }
 
+    def lookup_score(self):
+        return '%s-%s' % (self.score_mapping[self.P1_score], self.score_mapping[self.P2_score])
+
     def score(self):
-        if self.is_game_start():
-            return 'Love-All'
+        'Deuce' if self.is_deuce() else self.the_same_score() if self.is_the_same_score() else \
+            self.game_point_score() if self.is_someone_score_more_than_forty() else self.lookup_score()
+
+    def game_point_score(self):
+        if self.is_win():
+            return self.who_is_better('Win')
         else:
-            if self.is_win():
-                return self.who_is_better('Win')
+            return self.who_is_better('AD')
 
-            elif self.is_ad():
-                return self.who_is_better('AD')
-
-            elif self.is_deuce():
-                return 'Deuce'
-
-            elif self.is_the_same_score():
-                return '%s-All' % self.score_mapping[self.P1_score]
-
-            else:
-                return '%s-%s' % (self.score_mapping[self.P1_score], self.score_mapping[self.P2_score])
+    def the_same_score(self):
+        return '%s-All' % self.score_mapping[self.P1_score]
 
     def add_score(self, player, times):
         for i in range(0, times):
@@ -37,12 +34,6 @@ class TennisGame:
                 self.P1_score = self.P1_score + 1
             else:
                 self.P2_score = self.P2_score + 1
-
-    def is_game_start(self):
-        if self.is_the_same_score() and self.P1_score == 0:
-            return True
-        else:
-            return False
 
     def is_deuce(self):
         if self.is_the_same_score() and self.P1_score >= 3:
@@ -62,12 +53,6 @@ class TennisGame:
         else:
             return False
 
-    def is_ad(self):
-        if self.is_score_more_than_forty() and self.is_score_gap_more_than(1):
-            return True
-        else:
-            return False
-
     def who_is_better(self, status):
         if self.P1_score > self.P2_score:
             return '%s %s' % (self.p1_name, status)
@@ -82,12 +67,6 @@ class TennisGame:
 
     def is_someone_score_more_than_forty(self):
         if self.P1_score > 3 or self.P2_score > 3:
-            return True
-        else:
-            return False
-
-    def is_score_more_than_forty(self):
-        if self.P1_score >= 3 and self.P2_score >= 3:
             return True
         else:
             return False
