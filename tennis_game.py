@@ -22,11 +22,11 @@ class TennisGame:
         if self.is_the_same_score():
             return self.the_same_score()
 
-        if self.is_win():
-            return self.who_is_better('Win')
-
-        if self.is_ad():
-            return self.who_is_better('AD')
+        if self.is_someone_score_more_than_forty():
+            if self.is_win():
+                return self.who_is_better('Win')
+            else:
+                return self.who_is_better('AD')
 
         return self.lookup_score()
 
@@ -54,12 +54,6 @@ class TennisGame:
 
     def is_win(self):
         if self.is_someone_score_more_than_forty() and self.is_score_gap_more_than(2):
-            return True
-        else:
-            return False
-
-    def is_ad(self):
-        if self.is_someone_score_more_than_forty() and self.is_score_gap_more_than(1):
             return True
         else:
             return False
